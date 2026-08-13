@@ -2,6 +2,7 @@ from json_analyzer import analyze_patterns
 from json_handler import load_filters_and_patterns, normalize_filters
 from pattern_handler import validate_patterns
 from performance import analyze_performance
+from report import summarize_results, print_summary
 
 
 def run_json_mode():
@@ -78,3 +79,6 @@ def run_json_mode():
             f"{average_time:>12.6f} "
             f"{operations:>12}"
         )
+
+    summary = summarize_results(results, errors)
+    print_summary(summary)
