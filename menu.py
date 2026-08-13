@@ -1,4 +1,4 @@
-from mac import calculate_mac
+from input_mode import run_input_mode
 
 
 def run_menu():
@@ -12,32 +12,8 @@ def run_menu():
     mode = input("선택: ")
 
     if mode == "1":
-        cross_filter = [
-            [0, 1, 0],
-            [1, 1, 1],
-            [0, 1, 0]
-        ]
-
-        x_filter = [
-            [1, 0, 1],
-            [0, 1, 0],
-            [1, 0, 1]
-        ]
-
-        pattern = [
-            [0, 1, 0],
-            [1, 1, 1],
-            [0, 1, 0]
-        ]
-
-        cross_score = calculate_mac(pattern, cross_filter)
-        x_score = calculate_mac(pattern, x_filter)
-
-        print(f"Cross 점수: {cross_score}")
-        print(f"X 점수: {x_score}")
-
+        run_input_mode()
     elif mode == "2":
         print("data.json 분석 모드를 선택했습니다.")
-
     else:
         print("잘못된 입력입니다.")
