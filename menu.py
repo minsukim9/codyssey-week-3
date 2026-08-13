@@ -1,5 +1,5 @@
 from input_mode import run_input_mode
-from json_handler import load_filters_and_patterns
+from json_mode import run_json_mode
 
 
 def run_menu():
@@ -16,12 +16,7 @@ def run_menu():
         run_input_mode()
 
     elif mode == "2":
-        filters, patterns = load_filters_and_patterns()
-
-        if filters is not None and patterns is not None:
-            print("data.json 로드 완료")
-            print(f"필터 크기 종류: {len(filters)}개")
-            print(f"패턴: {len(patterns)}개")
+        run_json_mode()
 
     else:
         print("잘못된 입력입니다.")
