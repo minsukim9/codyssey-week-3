@@ -1,5 +1,7 @@
-from mac import calculate_mac
 from judge import judge_scores
+from mac import calculate_mac
+from performance import measure_mac
+
 
 SIZE = 3
 
@@ -56,11 +58,16 @@ def run_input_mode():
 
     result = judge_scores(score_a, score_b)
 
+    time_a = measure_mac(pattern, filter_a)
+    time_b = measure_mac(pattern, filter_b)
+    average_time = (time_a + time_b) / 2
+
     print("#---------------------------------------")
     print("# [3] MAC 결과")
     print("#---------------------------------------")
     print(f"A 점수: {score_a}")
     print(f"B 점수: {score_b}")
+    print(f"연산 시간(평균/10회): {average_time:.6f} ms")
 
     if result == "UNDECIDED":
         print("판정: 판정 불가 (|A-B| < 1e-9)")
