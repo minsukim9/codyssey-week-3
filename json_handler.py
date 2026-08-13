@@ -2,6 +2,7 @@ import json
 
 from label import normalize_label
 
+
 DATA_FILE = "data.json"
 FILTER_SIZES = (5, 13, 25)
 
@@ -26,11 +27,23 @@ def load_filters_and_patterns(file_path=DATA_FILE):
     if data is None:
         return None, None
 
+    if not isinstance(data, dict):
+        print("스키마 오류: JSON 최상위 데이터는 객체 형식이어야 합니다.")
+        return None, None
+
     filters = data.get("filters")
     patterns = data.get("patterns")
 
     if filters is None or patterns is None:
         print("스키마 오류: filters 또는 patterns가 존재하지 않습니다.")
+        return None, None
+
+    if not isinstance(filters, dict):
+        print("스키마 오류: filters는 객체 형식이어야 합니다.")
+        return None, None
+
+    if not isinstance(patterns, dict):
+        print("스키마 오류: patterns는 객체 형식이어야 합니다.")
         return None, None
 
     return filters, patterns
@@ -59,7 +72,7 @@ def normalize_filters(filters):
         filter_group = filters.get(size_key)
 
         if not isinstance(filter_group, dict):
-            print(f"스키마 오류: {size_key} 필터가 존재하지 않습니다.")
+            print(f"스키마 오류: {size_key} 필터가 존재하지 않거나 형식이 올바르지 않습니다.")
             continue
 
         normalized_group = {}
@@ -77,7 +90,7 @@ def normalize_filters(filters):
             if not validate_matrix(matrix, size):
                 print(
                     f"스키마 오류: {size_key}의 "
-                    f"{filter_key} 필터 크기가 올바르지 않습니다."
+                    f"{filter_key} 필터 크기 또는 데이터 형식이 올바르지 않습니다."
                 )
                 continue
 
@@ -86,7 +99,7 @@ def normalize_filters(filters):
         if "Cross" not in normalized_group or "X" not in normalized_group:
             print(
                 f"스키마 오류: {size_key}에 "
-                "Cross 또는 X 필터가 없습니다."
+                "정상적인 Cross 또는 X 필터가 없습니다."
             )
             continue
 
