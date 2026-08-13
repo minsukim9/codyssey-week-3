@@ -1,6 +1,7 @@
 from json_analyzer import analyze_patterns
 from json_handler import load_filters_and_patterns, normalize_filters
 from pattern_handler import validate_patterns
+from performance import analyze_performance
 
 
 def run_json_mode():
@@ -55,3 +56,25 @@ def run_json_mode():
     for pattern_key, reason in errors:
         print(f"--- {pattern_key} ---")
         print(f"판정: FAIL ({reason})")
+
+    print()
+    print("#---------------------------------------")
+    print("# [3] 성능 분석 (평균/10회)")
+    print("#---------------------------------------")
+    print("크기       평균 시간(ms)       연산 횟수")
+    print("---------------------------------------")
+
+    performance_results = analyze_performance(
+        normalized_filters
+    )
+
+    for result in performance_results:
+        size = result["size"]
+        average_time = result["average_time"]
+        operations = result["operations"]
+
+        print(
+            f"{size}x{size:<5} "
+            f"{average_time:>12.6f} "
+            f"{operations:>12}"
+        )
