@@ -1,5 +1,5 @@
 from mac import calculate_mac
-
+from judge import judge_scores
 
 SIZE = 3
 
@@ -36,9 +36,11 @@ def run_input_mode():
     print("#---------------------------------------")
 
     filter_a = input_matrix("필터 A")
+    print("필터 A 저장 완료")
     print()
 
     filter_b = input_matrix("필터 B")
+    print("필터 B 저장 완료")
     print()
 
     print("#---------------------------------------")
@@ -46,13 +48,21 @@ def run_input_mode():
     print("#---------------------------------------")
 
     pattern = input_matrix("패턴")
+    print("패턴 저장 완료")
     print()
 
     score_a = calculate_mac(pattern, filter_a)
     score_b = calculate_mac(pattern, filter_b)
+
+    result = judge_scores(score_a, score_b)
 
     print("#---------------------------------------")
     print("# [3] MAC 결과")
     print("#---------------------------------------")
     print(f"A 점수: {score_a}")
     print(f"B 점수: {score_b}")
+
+    if result == "UNDECIDED":
+        print("판정: 판정 불가 (|A-B| < 1e-9)")
+    else:
+        print(f"판정: {result}")
